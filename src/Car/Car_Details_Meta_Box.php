@@ -34,7 +34,7 @@ class Car_Details_Meta_Box {
 	public function get_meta_box(): Meta_Box {
 		return Meta_Box::side( 'car_details' )
 			->label( 'd' )
-			 ->view_template( 'car/details-meta-box' )
+			->view_template( 'car/details-meta-box' )
 			->view_vars(
 				array(
 					'car_translations' => $this->car_translations,
@@ -64,6 +64,8 @@ class Car_Details_Meta_Box {
 			fn( Meta_Data $meta): string => $meta->get_meta_key(),
 			$this->get_meta_data()
 		);
+
+		// Get all the current data from global post and set against post meta.
 		foreach ( $meta_keys as $key ) {
 			update_post_meta( $post_id, $key, sanitize_text_field( $_POST[ $key ] ) );
 		}
@@ -88,7 +90,7 @@ class Car_Details_Meta_Box {
 					->maximum( 2020 )
 					->description( $this->car_translations->year_description() )
 					->required()
-					->context( 'view' )
+					->context( 'view', 'edit' )
 					->sanitization( 'absint' )
 			);
 

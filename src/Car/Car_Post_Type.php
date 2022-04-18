@@ -22,6 +22,7 @@ class Car_Post_Type extends Post_Type {
 		Car_Translations $car_translations,
 		Car_Details_Meta_Box $car_details_meta_box
 	) {
+		// Hold Meta Box Service as a prop for used in callbacks.
 		$this->car_details_meta_box = $car_details_meta_box;
 
 		// Set labels and key from injected services.
@@ -30,9 +31,10 @@ class Car_Post_Type extends Post_Type {
 		$this->plural      = $car_translations->plural();
 		$this->description = $car_translations->cpt_description();
 
-		// Define Post Type values.
+		// Define which features are enabled.
 		$this->supports = array( 'editor', 'title', 'thumbnail' );
 
+		// Enable Gutenberg and define a basic template.
 		$this->gutenberg = true;
 		$this->templates = array(
 			array(
