@@ -1,0 +1,22 @@
+{
+    "name": "gin0115/perique-registerables-example",
+    "description": "This is an example project using Perique and Registerables",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Gin0115\\Perique_Registerables_Example\\": "src/"
+        }
+    },
+    "authors": [{
+        "name": "Glynn Quelch",
+        "email": "glynn.quelch@gmail.com"
+    }],
+    "require": {
+        "pinkcrab/perique-framework-core": "^1.0",
+        "pinkcrab/registerables": "dev-master",
+        "pinkcrab/wp-rest-schema": "dev-master",
+        "pinkcrab/form_fields": "dev-master"
+    },
+    "minimum-stability": "dev"
+}
