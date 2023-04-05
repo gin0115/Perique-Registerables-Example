@@ -102,7 +102,7 @@ use Gin0115\Perique_Registerables_Example\Car\Car_Brand_Taxonomy;
 
 This class defines the `Car` post type. It extends the [Post_Type](https://perique.info/module/Registerables/#post-type) class, which allows us to define a post type, while allowing us to inject various services and dependencies.
 
-### Injected Services
+### [Injected Services](https://perique.info/core/DI/)
 
 * [App_Config](https://perique.info/core/App/app_config) - Used to get the post type slug.
 * @TODO [Translations](#) - Used to translate the labels.
