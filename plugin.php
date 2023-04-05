@@ -23,7 +23,7 @@ use Gin0115\Perique_Registerables_Example\Car\Car_Brand_Taxonomy;
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Boot a barebones version of perique
-$app = ( new App_Factory( __DIR__ ) )
+( new App_Factory( __DIR__ ) )
 	->default_setup()
 	->app_config(
 		array(
