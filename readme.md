@@ -116,7 +116,7 @@ public function __construct(
 ) {..}
 ```
 
-### [Post_Type](https://perique.info/module/Registerables/#post-type)
+### [Defining the Post_Type](https://perique.info/module/Registerables/#post-type)
 
 As per the defineable fields of the [Post_Type](https://perique.info/module/Registerables/docs/Post-Type) class, we can define the following.
 
