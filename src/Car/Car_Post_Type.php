@@ -65,7 +65,7 @@ class Car_Post_Type extends Post_Type {
 	 */
 	public function meta_data( array $meta_data ): array {
 		// All the meta data is registered in the Car_Details_Meta class.
-		return $this->car_details_meta->get_meta_data();
+		return $this->car_details_meta->get_meta_fields();
 	}
 
 	/**

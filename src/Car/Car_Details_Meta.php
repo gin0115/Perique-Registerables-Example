@@ -91,11 +91,11 @@ class Car_Details_Meta {
 	 *
 	 * @return \PinkCrab\Registerables\Meta_Data[]
 	 */
-	public function get_meta_data(): array {
-		$meta_data = array();
+	public function get_meta_fields(): array {
+		$meta_fields = array();
 
 		// Add the meta data definition for the year.
-		$meta_data[] = ( new Meta_Data( $this->app_config->post_meta( 'year' ) ) )
+		$meta_fields[] = ( new Meta_Data( $this->app_config->post_meta( 'year' ) ) )
 			->type( 'integer' )
 			->single()
 			->description( $this->translations->meta_year_description() )
@@ -113,7 +113,7 @@ class Car_Details_Meta {
 			);
 
 		// Add the meta data definition for the doors.
-		$meta_data[] = ( new Meta_Data( $this->app_config->post_meta( 'doors' ) ) )
+		$meta_fields[] = ( new Meta_Data( $this->app_config->post_meta( 'doors' ) ) )
 			->type( 'integer' )
 			->single()
 			->description( $this->translations->meta_door_description() )
@@ -127,6 +127,6 @@ class Car_Details_Meta {
 						->sanitization( 'absint' )
 				)
 			);
-		return $meta_data;
+		return $meta_fields;
 	}
 }
