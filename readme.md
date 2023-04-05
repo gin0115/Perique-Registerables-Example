@@ -9,31 +9,31 @@ A simple plugin that shows how you can create a custom post, with custom fields,
 The main entry point for the plugin. This is where we create an instance of Perique and add the Registerables module. 
 ```php
 ( new App_Factory( __DIR__ ) )
-	->default_setup()
-	->app_config(
-		array(
-			'post_types' => array(
-				'car' => 'example_car',
-			),
-			'taxonomies' => array(
-				'brand' => 'example_brand',
-			),
-			'meta'       => array(
-				App_Config::POST_META => array(
-					'year'  => 'example_car_year',
-					'doors' => 'example_car_doors',
-				),
-			),
-		)
-	)
-	->module( Registerable::class )
-	->registration_classes(
-		array(
-			Car_Post_Type::class,
-			Car_Brand_Taxonomy::class,
-		)
-	)
-    ->boot();
+   ->default_setup()
+   ->app_config(
+      array(
+         'post_types' => array(
+            'car' => 'example_car',
+         ),
+         'taxonomies' => array(
+            'brand' => 'example_brand',
+         ),
+         'meta'       => array(
+            App_Config::POST_META => array(
+               'year'  => 'example_car_year',
+               'doors' => 'example_car_doors',
+            ),
+         ),
+      )
+   )
+   ->module( Registerable::class )
+   ->registration_classes(
+      array(
+         Car_Post_Type::class,
+         Car_Brand_Taxonomy::class,
+      )
+   )
+   ->boot();
 ```
 
 ### [Default Setup](https://perique.info/core/App/setup#using-the-factory)
