@@ -105,7 +105,42 @@ This class defines the `Car` post type. It extends the [Post_Type](https://periq
 ### Injected Services
 
 * [App_Config](https://perique.info/core/App/app_config) - Used to get the post type slug.
-* [Translations](#translations) - Used to translate the labels.
-* [Car_Details_Meta](#car_details_meta) - Service that provides the meta data defitnions and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
+* @TODO [Translations](#) - Used to translate the labels.
+* @TODO [Car_Details_Meta](#) - Service that provides the meta data definiens and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
+
+### [Post_Type](https://perique.info/module/Registerables/#post-type)
+
+As per the defineable fields of the [Post_Type](https://perique.info/module/Registerables/docs/Post-Type) class, we can define the following.
 
 ```php
+## As Properties
+public string $dashicon = 'dashicons-car';
+public ?bool $gutenberg = true;
+public array $supports  = array( 'editor', 'title', 'thumbnail' );
+
+## Using the constructor
+
+// Key and taxonomies used from App_Config
+$this->key        = $app_config->post_types( 'car' );
+$this->taxonomies = array( $app_config->taxonomies( 'brand' ) );
+
+// Labels from Translation dictionary.
+$this->singular    = $translations->cpt_singular();
+$this->plural      = $translations->cpt_plural();
+$this->description = $translations->cpt_description();
+
+// Define the template for the post type.
+$this->template = array(
+	array(
+		'core/heading',
+		array(
+			'placeholder' => $translations->cpt_template_sub_heading_placeholder(),
+		),	
+    ),
+	array(
+		'core/paragraph',
+		array(
+			'placeholder' => $translations->cpt_template_sell_it_placeholder(),
+		),
+	),
+);
