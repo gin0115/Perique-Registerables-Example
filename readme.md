@@ -131,16 +131,16 @@ $this->description = $translations->cpt_description();
 
 // Define the template for the post type.
 $this->template = array(
-	array(
-		'core/heading',
-		array(
-			'placeholder' => $translations->cpt_template_sub_heading_placeholder(),
-		),	
-    ),
-	array(
-		'core/paragraph',
-		array(
-			'placeholder' => $translations->cpt_template_sell_it_placeholder(),
-		),
-	),
+   array(
+      'core/heading',
+      array(
+         'placeholder' => $translations->cpt_template_sub_heading_placeholder(),
+      ),
+   ),
+   array(
+      'core/paragraph',
+      array(
+         'placeholder' => $translations->cpt_template_sell_it_placeholder(),
+      ),
+   ),
 );
