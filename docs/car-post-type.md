@@ -5,8 +5,8 @@ This class defines the `Car` post type. It extends the [Post_Type](https://periq
 ### [Injected Services](https://perique.info/core/DI/)
 
 * [App_Config](https://perique.info/core/App/app_config) - Used to get the post type slug.
-* [Translations](#translationsphp) - Used to translate the labels.
-* [Car_Details_Meta](#car_details_metaphp) - Service that provides the meta data definiens and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
+* [Translations](translations.md) - Used to translate the labels.
+* [Car_Details_Meta](car-details-meta.md) - Service that provides the meta data definiens and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
 
 ```php
 public function __construct(
@@ -56,4 +56,4 @@ $this->template = array(
 );
 ```
 
-The [Car Brand Taxonomy](#car_brand_taxonomyphp) is added to the post type, so that we can assign a brand to the car.
+The [Car Brand Taxonomy](car-brand-taxonomy.md) is added to the post type, so that we can assign a brand to the car.
