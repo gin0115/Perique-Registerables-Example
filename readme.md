@@ -69,7 +69,7 @@ This allows us to call `$app_config->post_types('car')` and get back the slug `e
 This allows us to call `$app_config->taxonomies('brand')` and get back the slug `example_brand`. 
 
 ```php
-'meta'       => array(
+'meta' => array(
    App_Config::POST_META => array(
       'year'  => 'example_car_year',
       'doors' => 'example_car_doors',
