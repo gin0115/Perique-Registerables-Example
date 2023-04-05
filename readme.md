@@ -157,3 +157,35 @@ $this->template = array(
       ),
    ),
 );
+```
+
+The [Car Brand Taxonomy](#car_brand_taxonomyphp) is added to the post type, so that we can assign a brand to the car.
+
+## Car_Brand_Taxonomy.php
+
+As with the `Car_Post_Type`, this taxonomy extends from the similar [Taxonomy](https://perique.info/module/Registerables/#taxonomy) class. This allows us to define the taxonomy, while allowing us to inject various services and dependencies.
+
+### [Injected Services](https://perique.info/core/DI/)
+
+* [App_Config](https://perique.info/core/App/app_config) - Used to get the taxonomy slug.
+* [Translations](#) - Used to translate the labels.
+
+```php
+public function __construct(
+   App_Config $app_config,
+   Translations $translations
+) {..}
+```
+
+### [Defining the Taxonomy](https://perique.info/module/Registerables/#taxonomy)
+
+![Cars Taxonomy Editor](docs/images/Cars-Taxonomy-Editor.png "Image of the Car Taxonomy Editor, with the defined block template.")
+
+
+## Car_Details_Meta.php
+
+
+## Translations.php
+
+## details-meta-box.php
+
