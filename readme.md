@@ -77,3 +77,5 @@ This allows us to call `$app_config->taxonomies('brand')` and get back the slug 
 ),
 ```
 This allows us to call `$app_config->post_meta('year')` and get back the slug `example_car_year`.
+
+### [Module](https://perique.info/core/Registration/Modules) & [Registration Classes](https://perique.info/core/Registration/Registration_Classes)
