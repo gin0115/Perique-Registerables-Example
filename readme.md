@@ -4,6 +4,9 @@ A simple plugin that shows how you can create a custom post, with custom fields,
 
 # Explanation
 
+* [Plugin File](#pluginphp)
+* [Car_Post_Type.php](#car_post_typephp)
+
 ## plugin.php
 
 The main entry point for the plugin. This is where we create an instance of Perique and add the Registerables module. 
