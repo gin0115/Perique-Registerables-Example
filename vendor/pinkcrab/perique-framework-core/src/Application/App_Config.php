@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace PinkCrab\Perique\Application;
 
 use OutOfBoundsException;
+use PinkCrab\Perique\Utils\App_Config_Path_Helper;
 
 final class App_Config {
 
@@ -29,42 +30,42 @@ final class App_Config {
 	 *
 	 * @var array<string, mixed>
 	 */
-	protected $paths = array();
+	private array $paths = array();
 
 	/**
 	 * Holds all the namespaces (rest, cache etc).
 	 *
 	 * @var array<string, mixed>
 	 */
-	protected $namespaces = array();
+	private array $namespaces = array();
 
 	/**
 	 * Holds all plugin details.
 	 *
 	 * @var array<string, mixed>
 	 */
-	protected $plugin = array();
+	private array $plugin = array();
 
 	/**
 	 * Holds all taxonomy terms.
 	 *
 	 * @var array<string, mixed>
 	 */
-	protected $taxonomies = array();
+	private array $taxonomies = array();
 
 	/**
 	 * Holds the CPT slugs and meta keys.
 	 *
 	 * @var array<string, mixed>
 	 */
-	protected $post_types = array();
+	private array $post_types = array();
 
 	/**
 	 * Holds an array of table names.
 	 *
 	 * @var array<string, mixed>
 	 */
-	protected $db_tables = array();
+	private array $db_tables = array();
 
 	/**
 	 * Holds all custom settings keys.
@@ -72,14 +73,14 @@ final class App_Config {
 	 *
 	 * @var array<string, mixed>
 	 */
-	protected $additional = array();
+	private array $additional = array();
 
 	/**
 	 * Holds all the meta keys
 	 *
 	 * @var array{post:array<string,string>,user:array<string,string>,term:array<string,string>}
 	 */
-	protected $meta = array(
+	private array $meta = array(
 		self::POST_META => array(),
 		self::USER_META => array(),
 		self::TERM_META => array(),
@@ -210,6 +211,15 @@ final class App_Config {
 	}
 
 	/**
+	 * Returns the wpdb prefix
+	 *
+	 * @return string
+	 */
+	public function wpdb_prefix(): string {
+		return $this->plugin['wpdb_prefix'];
+	}
+
+	/**
 	 * Returns the key for a post type.
 	 *
 	 * @param string $key
@@ -218,7 +228,7 @@ final class App_Config {
 	 */
 	public function post_types( string $key ) {
 		if ( ! array_key_exists( $key, $this->post_types ) ) {
-			throw new OutOfBoundsException( 'Post Type not defined.' );
+			throw new OutOfBoundsException( "App Config :: \"{$key}\" is not a defined post type" );
 		}
 
 		return $this->post_types[ $key ];
@@ -235,11 +245,11 @@ final class App_Config {
 	public function meta( string $key, string $type = self::POST_META ): string {
 		// Check meta type.
 		if ( ! array_key_exists( $type, $this->meta ) ) {
-			throw new OutOfBoundsException( 'Meta Type doesnt exists' );
+			throw new OutOfBoundsException( "App Config :: \"{$type}\" is not a valid meta type and cant be fetched" );
 		}
 		// Check key.
 		if ( ! array_key_exists( $key, $this->meta[ $type ] ) ) {
-			throw new OutOfBoundsException( $type . ' meta key doesnt exists' );
+			throw new OutOfBoundsException( "App Config :: \"{$key}\" is not a defined {$type} meta key" );
 		}
 
 		return $this->meta[ $type ][ $key ];
@@ -288,7 +298,7 @@ final class App_Config {
 		$valid_meta_types = array( self::POST_META, self::USER_META, self::TERM_META );
 		foreach ( $meta as $meta_type => $pairs ) {
 			if ( ! in_array( $meta_type, $valid_meta_types, true ) ) {
-				throw new OutOfBoundsException( 'Valid meta type must be used as key.' );
+				throw new OutOfBoundsException( "App Config :: \"{$meta_type}\" is not a valid meta type and cant be defined" );
 			}
 
 			// Set all pairs which have both valid key and values.
@@ -305,7 +315,7 @@ final class App_Config {
 	 */
 	public function taxonomies( string $key ): string {
 		if ( ! array_key_exists( $key, $this->taxonomies ) ) {
-			throw new OutOfBoundsException( 'Taxonomy not defined.' );
+			throw new OutOfBoundsException( "App Config :: \"{$key}\" is not a defined taxonomy" );
 		}
 
 		return $this->taxonomies[ $key ];
@@ -321,7 +331,7 @@ final class App_Config {
 	 */
 	public function db_tables( string $name ): string {
 		if ( ! array_key_exists( $name, $this->db_tables ) ) {
-			throw new OutOfBoundsException( 'Table doesnt exist' );
+			throw new OutOfBoundsException( "App Config :: \"{$name}\" is not a defined DB table" );
 		}
 		return $this->db_tables[ $name ];
 	}
@@ -343,34 +353,35 @@ final class App_Config {
 	 */
 	private function settings_defaults(): array {
 		$base_path  = \dirname( __DIR__, 2 );
-		$plugin_dir = \basename( $base_path );
 		$wp_uploads = \wp_upload_dir();
+
+		$base_path = App_Config_Path_Helper::normalise_path( $base_path );
+		$view_path = App_Config_Path_Helper::assume_view_path( $base_path );
+
+		global $wpdb;
 
 		return array(
 			'plugin'     => array(
-				'version' => '0.1.0',
+				'version'     => '0.1.0',
+				'wpdb_prefix' => $wpdb->prefix,
 			),
 			'path'       => array(
 				'plugin'         => $base_path,
-				'view'           => $base_path . '/views',
-				'assets'         => $base_path . '/assets',
+				'view'           => $view_path,
+				'assets'         => $base_path . \DIRECTORY_SEPARATOR . 'assets',
 				'upload_root'    => $wp_uploads['basedir'],
 				'upload_current' => $wp_uploads['path'],
 			),
 			'url'        => array(
-				'plugin'         => plugins_url( $plugin_dir ),
-				'view'           => plugins_url( $plugin_dir ) . '/views',
-				'assets'         => plugins_url( $plugin_dir ) . '/assets',
+				'plugin'         => App_Config_Path_Helper::assume_base_url( $base_path ),
+				'view'           => App_Config_Path_Helper::assume_view_url( $base_path, $view_path ),
+				'assets'         => App_Config_Path_Helper::assume_base_url( $base_path ) . '/assets',
 				'upload_root'    => $wp_uploads['baseurl'],
 				'upload_current' => $wp_uploads['url'],
 			),
 			'post_types' => array(),
 			'taxonomies' => array(),
-			'meta'       => array(
-				self::POST_META => array(),
-				self::USER_META => array(),
-				self::TERM_META => array(),
-			),
+			'meta'       => array(),
 			'db_tables'  => array(),
 			'namespaces' => array(
 				'rest'  => 'pinkcrab',
@@ -392,8 +403,9 @@ final class App_Config {
 			$pairs,
 			function ( $value, $key ): bool {
 				return is_string( $value )
-				&& \mb_strlen( $value ) > 0
-				&& is_string( $key );
+				&& \strlen( $value ) > 0
+				&& is_string( $key )
+				&& \strlen( $key ) > 0;
 			},
 			ARRAY_FILTER_USE_BOTH
 		);

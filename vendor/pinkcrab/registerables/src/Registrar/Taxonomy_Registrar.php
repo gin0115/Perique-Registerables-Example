@@ -30,23 +30,12 @@ use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Validator\Taxonomy_Validator;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Taxonomy_Registrar implements Registrar {
 
-	/**
-	 * Taxonomy Validator
-	 *
-	 * @var Taxonomy_Validator
-	 */
-	protected $validator;
-
-	/**
-	 * Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Taxonomy_Validator $validator;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct(
 		Taxonomy_Validator $validator,
@@ -59,7 +48,7 @@ class Taxonomy_Registrar implements Registrar {
 	/**
 	 * Register a taxonomy
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $registerable
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void {
@@ -132,7 +121,7 @@ class Taxonomy_Registrar implements Registrar {
 			/* translators: %s: Taxonomy plural name */
 			'search_items'          => wp_sprintf( _x( 'Search %s', 'Label for searching plural items. Default is ‘Search {taxonomy plural name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy plural name */
-			'popular_items'         => wp_sprintf( _x( 'Popular %s', '**', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
+			'popular_items'         => wp_sprintf( _x( 'Popular %s', 'Label for the popular terms', 'pinkcrab' ), \esc_attr( $taxonomy->plural ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
 			'edit_item'             => wp_sprintf( _x( 'Edit %s', 'Label for editing a singular item. Default is ‘Edit {taxonomy singular name}’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
@@ -173,7 +162,7 @@ class Taxonomy_Registrar implements Registrar {
 			/* translators: %s: Taxonomy singular name */
 			'parent_item_colon' => wp_sprintf( _x( 'Parent %s:', 'Label used to prefix parents of hierarchical items. Not used on non-hierarchical taxonomys. Default is ‘Parent {taxonomy plural name}:’.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
-			'parent_item'       => wp_sprintf( _x( 'Parent %s', '**', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
+			'parent_item'       => wp_sprintf( _x( 'Parent %s', 'Label for the parent term', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 			/* translators: %s: Taxonomy singular name */
 			'filter_by_item'    => wp_sprintf( _x( 'Filter by %s', 'This label is only used for hierarchical taxonomies. Default \'Filter by {taxonomy singular name}\', used in the posts list table.', 'pinkcrab' ), \esc_attr( $taxonomy->singular ?? '' ) ),
 		);
@@ -212,16 +201,21 @@ class Taxonomy_Registrar implements Registrar {
 			'label'                 => $taxonomy->label ?? $taxonomy->plural,
 			'query_var'             => $taxonomy->query_var,
 			'hierarchical'          => $taxonomy->hierarchical,
-			'capabilities'          => $taxonomy->capabilities ?? array(
-				'manage_terms' => "manage_ {$taxonomy->slug}",
-				'edit_terms'   => "edit_ $taxonomy->slug",
-				'delete_terms' => "delete $taxonomy->slug",
-				'assign_terms' => "assign_ $taxonomy->slug",
-			),
 			'update_count_callback' => $taxonomy->update_count_callback ?? '_update_post_term_count',
 			'meta_box_cb'           => $taxonomy->meta_box_cb ??
 				$taxonomy->hierarchical ? 'post_categories_meta_box' : 'post_tags_meta_box',
 			'default_term'          => $taxonomy->default_term,
+		);
+
+		// Merge existing capabilities with the new ones.
+		$args['capabilities'] = array_merge(
+			array(
+				'manage_terms' => 'manage_categories',
+				'edit_terms'   => 'manage_categories',
+				'delete_terms' => 'manage_categories',
+				'assign_terms' => 'edit_posts',
+			),
+			$taxonomy->capabilities ?? array()
 		);
 
 		/**

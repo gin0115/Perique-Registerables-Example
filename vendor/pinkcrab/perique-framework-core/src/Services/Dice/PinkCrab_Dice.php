@@ -34,9 +34,9 @@ class PinkCrab_Dice implements DI_Container {
 	/**
 	 * Holds the instance of DICE to work with.
 	 *
-	 * @var Dice;
+	 * @var Dice $dice
 	 */
-	protected $dice;
+	protected Dice $dice;
 
 	/**
 	 * Passes in the initial dice instance.
@@ -64,7 +64,7 @@ class PinkCrab_Dice implements DI_Container {
 	 * @param string $id Class name (fully namespaced.)
 	 * @return object|null
 	 */
-	public function get( $id ) {
+	public function get( string $id ): ?object {
 		if ( ! $this->has( $id ) ) {
 			throw new DI_Container_Exception( "{$id} not defined in container", 1 );
 		}
@@ -78,7 +78,7 @@ class PinkCrab_Dice implements DI_Container {
 	 * @param string $id Class name (fully namespaced.)
 	 * @return bool
 	 */
-	public function has( $id ) {
+	public function has( string $id ): bool {
 		$from_dice = $this->dice->getRule( $id );
 		// If set in global rules.
 		if ( array_key_exists( 'substitutions', $from_dice )
@@ -125,7 +125,17 @@ class PinkCrab_Dice implements DI_Container {
 	 * @param array<mixed> $args
 	 * @return object|null
 	 */
-	public function create( string $name, array $args = array() ) {
+	public function create( string $name, array $args = array() ): ?object {
 		return $this->dice->create( $name, $args );
+	}
+
+	/**
+	 * Gets a defined rule from the container.
+	 *
+	 * @param string $name
+	 * @return array<mixed>
+	 */
+	public function getRule( string $name ): ?array {
+		return $this->dice->getRule( $name );
 	}
 }

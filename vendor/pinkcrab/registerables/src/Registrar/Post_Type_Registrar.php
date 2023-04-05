@@ -25,29 +25,17 @@ declare(strict_types=1);
 namespace PinkCrab\Registerables\Registrar;
 
 use Exception;
-use PinkCrab\Registerables\Meta_Data;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Registerable_Hooks;
 use PinkCrab\Registerables\Registrar\Registrar;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Post_Type_Registrar implements Registrar {
 
-	/**
-	 * Post Type Validator
-	 *
-	 * @var Post_Type_Validator
-	 */
-	protected $validator;
-
-	/**
-	 * Meta Data Registrar
-	 *
-	 * @var Meta_Data_Registrar
-	 */
-	protected $meta_data_registrar;
+	protected Post_Type_Validator $validator;
+	protected Meta_Data_Registrar $meta_data_registrar;
 
 	public function __construct(
 		Post_Type_Validator $validator,
@@ -60,7 +48,7 @@ class Post_Type_Registrar implements Registrar {
 	/**
 	 * Register a post type
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $registerable
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $registerable
 	 * @return void
 	 */
 	public function register( Registerable $registerable ): void {
@@ -200,6 +188,14 @@ class Post_Type_Registrar implements Registrar {
 			);
 		}
 
+		// Set the meta cap based on its definition and if uses gutenberg.
+		// See https://github.com/Pink-Crab/Perique-Registerables/issues/66
+		if ( null === $post_type->map_meta_cap ) {
+			$meta_cap = $post_type->gutenberg ? true : false;
+		} else {
+			$meta_cap = $post_type->map_meta_cap ?? false;
+		}
+
 		// Compose args.
 		$args = array(
 			'labels'                => $labels,
@@ -226,8 +222,9 @@ class Post_Type_Registrar implements Registrar {
 			'rest_base'             => $post_type->rest_base ?? $post_type->key,
 			'rest_controller_class' => \class_exists( $post_type->rest_controller_class ) ? $post_type->rest_controller_class : \WP_REST_Posts_Controller::class,
 			'delete_with_user'      => \is_bool( $post_type->delete_with_user ) ? $post_type->delete_with_user : null,
-			'template'              => \is_array( $post_type->templates ) ? $post_type->templates : array(),
+			'template'              => \is_array( $post_type->template ) ? $post_type->template : array(),
 			'template_lock'         => \is_string( $post_type->template_lock ) ? $post_type->template_lock : false,
+			'map_meta_cap'          => $meta_cap,
 		);
 
 		/**

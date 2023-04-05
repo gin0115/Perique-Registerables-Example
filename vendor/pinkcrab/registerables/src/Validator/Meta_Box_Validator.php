@@ -28,7 +28,7 @@ namespace PinkCrab\Registerables\Validator;
 use PinkCrab\Registerables\Meta_Box;
 use PinkCrab\Registerables\Post_Type;
 use PinkCrab\Registerables\Validator\Abstract_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Meta_Box_Validator extends Abstract_Validator {
 
@@ -37,7 +37,7 @@ class Meta_Box_Validator extends Abstract_Validator {
 	/**
 	 * Validates the class passed.
 	 *
-	 * @param \PinkCrab\Registerables\Registration_Middleware\Registerable $object
+	 * @param \PinkCrab\Registerables\Module\Middleware\Registerable $object
 	 * @return bool
 	 */
 	public function validate( Registerable $object ): bool { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundInExtendedClass
@@ -94,9 +94,7 @@ class Meta_Box_Validator extends Abstract_Validator {
 	 */
 	protected function has_valid_view( Meta_Box $meta_box ): void {
 		if ( ! \is_callable( $meta_box->view )
-		&& ( ! is_string( $meta_box->view_template )
-			|| ( is_string( $meta_box->view_template ) && \mb_strlen( $meta_box->view_template ) === 0 )
-		)
+		&& ( ! is_string( $meta_box->view_template ) || \mb_strlen( $meta_box->view_template ) === 0 )
 		) {
 			$this->add_error( sprintf( '%s doesn\'t have a valid view defined.', get_class( $meta_box ) ) );
 		}

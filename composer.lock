@@ -4,27 +4,27 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4172ceb1f17a64c53ac79a2c7d74b0af",
+    "content-hash": "37015ac8c375c869bf25134cc6e79d70",
     "packages": [
         {
-            "name": "level-2/dice",
-            "version": "4.0.3",
+            "name": "gin0115/dice",
+            "version": "4.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Level-2/Dice.git",
-                "reference": "3e9a8548398c01e2527110c916a93f6efa17ac9c"
+                "url": "https://github.com/gin0115/Dice.git",
+                "reference": "eb921b940cb6fd98bf164ca3ee3c621962ee20dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Level-2/Dice/zipball/3e9a8548398c01e2527110c916a93f6efa17ac9c",
-                "reference": "3e9a8548398c01e2527110c916a93f6efa17ac9c",
+                "url": "https://api.github.com/repos/gin0115/Dice/zipball/eb921b940cb6fd98bf164ca3ee3c621962ee20dd",
+                "reference": "eb921b940cb6fd98bf164ca3ee3c621962ee20dd",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": ">=7.1.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.5"
+                "phpunit/phpunit": "*"
             },
             "type": "library",
             "autoload": {
@@ -51,83 +51,89 @@
                 "ioc"
             ],
             "support": {
-                "issues": "https://github.com/Level-2/Dice/issues",
-                "source": "https://github.com/Level-2/Dice/tree/4.0.3"
+                "source": "https://github.com/gin0115/Dice/tree/4.1.0"
             },
-            "time": "2021-04-20T14:06:06+00:00"
+            "time": "2023-03-22T16:03:18+00:00"
         },
         {
-            "name": "pinkcrab/form_fields",
-            "version": "dev-master",
+            "name": "pinkcrab/function-constructors",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Pink-Crab/Form-Fields.git",
-                "reference": "2499abcdf8ad3e404731d32e22268e9ca7a8b7cd"
+                "url": "https://github.com/gin0115/pinkcrab_function_constructors.git",
+                "reference": "1c6e6fc9fa27fdf170af0f296237b4c88386c489"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pink-Crab/Form-Fields/zipball/2499abcdf8ad3e404731d32e22268e9ca7a8b7cd",
-                "reference": "2499abcdf8ad3e404731d32e22268e9ca7a8b7cd",
+                "url": "https://api.github.com/repos/gin0115/pinkcrab_function_constructors/zipball/1c6e6fc9fa27fdf170af0f296237b4c88386c489",
+                "reference": "1c6e6fc9fa27fdf170af0f296237b4c88386c489",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "*",
-                "gin0115/wpunit-helpers": "dev-main",
-                "object-calisthenics/phpcs-calisthenics-rules": "*",
-                "php-stubs/wordpress-stubs": "^5.6.0",
-                "phpstan/phpstan": "^0.12.6",
-                "phpunit/phpunit": "^7.0",
-                "phpunit/phpunit-dom-assertions": "~2",
-                "symfony/css-selector": "4.4.*",
-                "symfony/dom-crawler": "4.4.*",
-                "symfony/var-dumper": "4.*",
-                "szepeviktor/phpstan-wordpress": "^0.7.2",
-                "wp-coding-standards/wpcs": "*",
-                "yoast/phpunit-polyfills": "^0.2.0"
+                "friendsofphp/php-cs-fixer": "^3",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": "^7.0 || ^9.0",
+                "yoast/phpunit-polyfills": "^1.0.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
-                "files": [],
+                "files": [
+                    "src/function-constants.php",
+                    "src/constants.php",
+                    "src/procedural.php",
+                    "src/arrays.php",
+                    "src/comparisons.php",
+                    "src/general.php",
+                    "src/strings.php",
+                    "src/numbers.php",
+                    "src/objects.php"
+                ],
                 "psr-4": {
-                    "PinkCrab\\Form_Fields\\": "src"
+                    "PinkCrab\\FunctionConstructors\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "GPL-2.0-or-later"
             ],
             "authors": [
                 {
                     "name": "Glynn Quelch",
                     "email": "glynn.quelch@pinkcrab.co.uk",
-                    "homepage": "http://clappo.co.uk",
+                    "homepage": "https://github.com/gin0115",
                     "role": "Developer"
                 }
             ],
-            "description": "A simple form field creator ideal for wp-admin hook calls where a simple input is needed only as html.",
+            "description": "A collection of functions to make working with the standard php library a little easier for function composition. Allows the creation of partially applied library functions, to work as close to pure fucntions as possible.",
             "homepage": "https://pinkcrab.co.uk",
+            "keywords": [
+                "currying",
+                "fp",
+                "functional",
+                "partial application",
+                "piping"
+            ],
             "support": {
-                "issues": "https://github.com/Pink-Crab/Form-Fields/issues",
-                "source": "https://github.com/Pink-Crab/Form-Fields/tree/0.1.8"
+                "issues": "https://github.com/gin0115/pinkcrab_function_constructors/issues",
+                "source": "https://github.com/gin0115/pinkcrab_function_constructors/tree/0.2.0"
             },
-            "time": "2022-04-08T00:17:18+00:00"
+            "time": "2023-01-28T01:15:55+00:00"
         },
         {
             "name": "pinkcrab/hook-loader",
-            "version": "1.1.2",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pink-Crab/Loader.git",
-                "reference": "ae53ce0ce075981d9595bd2f776dc98265c0d81f"
+                "reference": "d43b647a6a0b009845f0248be5fb9fe8241f489e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pink-Crab/Loader/zipball/ae53ce0ce075981d9595bd2f776dc98265c0d81f",
-                "reference": "ae53ce0ce075981d9595bd2f776dc98265c0d81f",
+                "url": "https://api.github.com/repos/Pink-Crab/Loader/zipball/d43b647a6a0b009845f0248be5fb9fe8241f489e",
+                "reference": "d43b647a6a0b009845f0248be5fb9fe8241f489e",
                 "shasum": ""
             },
             "require": {
@@ -137,15 +143,15 @@
                 "dealerdirect/phpcodesniffer-composer-installer": "*",
                 "gin0115/wpunit-helpers": "^1.0",
                 "object-calisthenics/phpcs-calisthenics-rules": "*",
-                "php-stubs/wordpress-stubs": "^5.6.0",
-                "phpstan/phpstan": "^0.12.6",
-                "phpunit/phpunit": "^7.0",
-                "roots/wordpress": "^5.5",
+                "php-stubs/wordpress-stubs": "^6.0 || ^5.9",
+                "phpstan/phpstan": "^1.0",
+                "phpunit/phpunit": "^7.0 || ^8.0",
+                "roots/wordpress": "^6.0",
                 "symfony/var-dumper": "4.*",
-                "szepeviktor/phpstan-wordpress": "^0.7.2",
+                "szepeviktor/phpstan-wordpress": "^1.0",
                 "wp-coding-standards/wpcs": "*",
-                "wp-phpunit/wp-phpunit": "^5.0",
-                "yoast/phpunit-polyfills": "^0.2.0"
+                "wp-phpunit/wp-phpunit": "^6.0",
+                "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0"
             },
             "type": "library",
             "autoload": {
@@ -172,43 +178,44 @@
             "homepage": "https://pinkcrab.co.uk",
             "support": {
                 "issues": "https://github.com/Pink-Crab/Loader/issues",
-                "source": "https://github.com/Pink-Crab/Loader/tree/1.1.2"
+                "source": "https://github.com/Pink-Crab/Loader/tree/1.2.0"
             },
-            "time": "2021-05-08T08:17:08+00:00"
+            "time": "2022-05-27T11:49:19+00:00"
         },
         {
             "name": "pinkcrab/perique-framework-core",
-            "version": "1.1.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pink-Crab/Perique-Framework.git",
-                "reference": "de6229b8e68fc78609fabadf8c68064eb6dc4592"
+                "reference": "9d7a2c8f46e4ae477542261a0934affd6b3feabe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pink-Crab/Perique-Framework/zipball/de6229b8e68fc78609fabadf8c68064eb6dc4592",
-                "reference": "de6229b8e68fc78609fabadf8c68064eb6dc4592",
+                "url": "https://api.github.com/repos/Pink-Crab/Perique-Framework/zipball/9d7a2c8f46e4ae477542261a0934affd6b3feabe",
+                "reference": "9d7a2c8f46e4ae477542261a0934affd6b3feabe",
                 "shasum": ""
             },
             "require": {
-                "level-2/dice": "4.0.*",
-                "php": ">=7.1.0",
+                "gin0115/dice": "4.1.*",
+                "php": ">=7.4.0",
+                "pinkcrab/function-constructors": "0.2.*",
                 "pinkcrab/hook-loader": "^1.1",
                 "psr/container": "^1.0"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "*",
-                "gin0115/wpunit-helpers": "~1.0.0",
-                "object-calisthenics/phpcs-calisthenics-rules": "*",
-                "php-stubs/wordpress-stubs": "^5.9.0",
-                "phpstan/phpstan": "^1.0",
-                "phpunit/phpunit": "^7.0 || ^8.0",
-                "roots/wordpress": "^5.9",
-                "symfony/var-dumper": "4.*",
-                "szepeviktor/phpstan-wordpress": "^1.0",
-                "wp-coding-standards/wpcs": "*",
-                "wp-phpunit/wp-phpunit": "^5.9",
-                "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0"
+                "dealerdirect/phpcodesniffer-composer-installer": "<=1.0.0",
+                "gin0115/wpunit-helpers": "1.1.*",
+                "php-stubs/wordpress-stubs": "6.2.*",
+                "phpstan/phpstan": "1.*",
+                "phpunit/phpunit": "^8.5",
+                "roots/wordpress": "6.2.*",
+                "symfony/var-dumper": "<=6.2.7",
+                "szepeviktor/phpstan-wordpress": "<=1.1.7",
+                "vlucas/phpdotenv": "<=5.5.0",
+                "wp-coding-standards/wpcs": "<=2.3.0",
+                "wp-phpunit/wp-phpunit": "6.2.*",
+                "yoast/phpunit-polyfills": "^1.0.0"
             },
             "type": "library",
             "autoload": {
@@ -232,49 +239,47 @@
             "homepage": "https://pinkcrab.co.uk",
             "support": {
                 "issues": "https://github.com/Pink-Crab/Perique-Framework/issues",
-                "source": "https://github.com/Pink-Crab/Perique-Framework/tree/1.1.0"
+                "source": "https://github.com/Pink-Crab/Perique-Framework/tree/2.0.0"
             },
-            "time": "2022-03-31T23:16:22+00:00"
+            "time": "2023-04-03T11:37:38+00:00"
         },
         {
             "name": "pinkcrab/registerables",
-            "version": "dev-master",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pink-Crab/Perique-Registerables.git",
-                "reference": "7af0e69817d0bb3db7e3df5a508bcdd932286f2f"
+                "reference": "5cd569220af44f772366d7a7b412b51d27c9ad68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pink-Crab/Perique-Registerables/zipball/7af0e69817d0bb3db7e3df5a508bcdd932286f2f",
-                "reference": "7af0e69817d0bb3db7e3df5a508bcdd932286f2f",
+                "url": "https://api.github.com/repos/Pink-Crab/Perique-Registerables/zipball/5cd569220af44f772366d7a7b412b51d27c9ad68",
+                "reference": "5cd569220af44f772366d7a7b412b51d27c9ad68",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.1.0",
-                "pinkcrab/perique-framework-core": "^1.0"
+                "php": ">=7.4.0",
+                "pinkcrab/perique-framework-core": "2.0.*"
             },
             "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "*",
-                "gin0115/wpunit-helpers": "~1.0.0",
-                "object-calisthenics/phpcs-calisthenics-rules": "*",
-                "php-stubs/wordpress-stubs": "^5.9.0",
-                "phpstan/phpstan": "^1.0",
-                "phpunit/phpunit": "^7.0 || ^8.0",
-                "pinkcrab/wp-rest-schema": "dev-master",
-                "roots/wordpress": "^5.9",
-                "symfony/var-dumper": "4.*",
-                "szepeviktor/phpstan-wordpress": "^1.0",
-                "wp-coding-standards/wpcs": "*",
-                "wp-phpunit/wp-phpunit": "^5.9",
-                "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0"
+                "dealerdirect/phpcodesniffer-composer-installer": "<=1.0.0",
+                "gin0115/wpunit-helpers": "1.1.*",
+                "php-stubs/wordpress-stubs": "6.2-",
+                "phpstan/phpstan": "1.*",
+                "phpunit/phpunit": " ^8.5",
+                "pinkcrab/wp-rest-schema": "0.0.*",
+                "roots/wordpress": "6.2.*",
+                "symfony/var-dumper": "<=6.2.7",
+                "szepeviktor/phpstan-wordpress": "<=1.1.7",
+                "vlucas/phpdotenv": "<=5.5.0",
+                "wp-coding-standards/wpcs": "<=2.3.0",
+                "wp-phpunit/wp-phpunit": "6.2.*",
+                "yoast/phpunit-polyfills": "^1.0.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [],
                 "psr-4": {
-                    "Gin0115\\WPUnit_Helpers\\": "WPUnit_Helpers",
                     "PinkCrab\\Registerables\\": "src"
                 }
             },
@@ -294,22 +299,22 @@
             "homepage": "https://pinkcrab.co.uk",
             "support": {
                 "issues": "https://github.com/Pink-Crab/Perique-Registerables/issues",
-                "source": "https://github.com/Pink-Crab/Perique-Registerables/tree/master"
+                "source": "https://github.com/Pink-Crab/Perique-Registerables/tree/2.0.0"
             },
-            "time": "2022-04-08T10:57:21+00:00"
+            "time": "2023-04-03T23:10:41+00:00"
         },
         {
             "name": "pinkcrab/wp-rest-schema",
-            "version": "dev-master",
+            "version": "0.0.1-beta3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pink-Crab/WP_Rest_Schema_Builder.git",
-                "reference": "77dbf618edd409191b565b808e8dc20e6ebfd6ff"
+                "reference": "2038c49b68efef602a870a61f18bb6c3d7294c22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pink-Crab/WP_Rest_Schema_Builder/zipball/77dbf618edd409191b565b808e8dc20e6ebfd6ff",
-                "reference": "77dbf618edd409191b565b808e8dc20e6ebfd6ff",
+                "url": "https://api.github.com/repos/Pink-Crab/WP_Rest_Schema_Builder/zipball/2038c49b68efef602a870a61f18bb6c3d7294c22",
+                "reference": "2038c49b68efef602a870a61f18bb6c3d7294c22",
                 "shasum": ""
             },
             "require": {
@@ -330,7 +335,6 @@
                 "wp-phpunit/wp-phpunit": "^5.0",
                 "yoast/phpunit-polyfills": "^0.2.0 || ^1.0.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "files": [],
@@ -354,13 +358,13 @@
             "homepage": "https://pinkcrab.co.uk",
             "support": {
                 "issues": "https://github.com/Pink-Crab/WP_Rest_Schema_Builder/issues",
-                "source": "https://github.com/Pink-Crab/WP_Rest_Schema_Builder/tree/master"
+                "source": "https://github.com/Pink-Crab/WP_Rest_Schema_Builder/tree/0.0.1-beta3"
             },
-            "time": "2022-04-05T22:18:56+00:00"
+            "time": "2021-11-24T23:47:02+00:00"
         },
         {
             "name": "psr/container",
-            "version": "1.x-dev",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
@@ -410,14 +414,10 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "pinkcrab/registerables": 20,
-        "pinkcrab/wp-rest-schema": 20,
-        "pinkcrab/form_fields": 20
-    },
-    "prefer-stable": false,
+    "stability-flags": [],
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }

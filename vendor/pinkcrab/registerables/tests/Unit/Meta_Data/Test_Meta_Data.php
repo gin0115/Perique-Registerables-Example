@@ -41,6 +41,7 @@ class Test_Meta_Data extends WP_UnitTestCase {
 		$meta->type( 'string' );
 
 		$this->assertEquals( 'string', $meta->parse_args()['type'] );
+		$this->assertEquals( 'string', $meta->get_value_type());
 	}
 
 	/** @testdox It should be possible to the description for the meta data. */
@@ -125,5 +126,21 @@ class Test_Meta_Data extends WP_UnitTestCase {
 		$meta->taxonomy( 'tax_test' );
 		$this->assertEquals( 'term', Objects::get_property( $meta, 'meta_type' ) );
 		$this->assertEquals( 'tax_test', $meta->parse_args()['object_subtype'] );
+	}
+
+	/** @testdox It should be possible to set and get the rest update callback method */
+	public function test_can_set_get_rest_update_callback(): void {
+		$meta = new Meta_Data( 'meta_key' );
+		$this->assertNull( $meta->get_rest_update() );
+		$meta->rest_update( 'strtoupper' );
+		$this->assertEquals( 'strtoupper', $meta->get_rest_update() );
+	}
+
+	/** @testdox It should be possible to set and get the rest view callback method */
+	public function test_can_set_get_rest_view_callback(): void {
+		$meta = new Meta_Data( 'meta_key' );
+		$this->assertNull( $meta->get_rest_view() );
+		$meta->rest_view( 'strtoupper' );
+		$this->assertEquals( 'strtoupper', $meta->get_rest_view() );
 	}
 }

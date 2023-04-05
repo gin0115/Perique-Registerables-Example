@@ -4,9 +4,18 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4
+class ComposerStaticInitfbb0d6307eef497089179c14b90bda26
 {
     public static $files = array (
+        '629ce17518f090b1a5498d5df81e170c' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/function-constants.php',
+        'a835bfba871fed6628182d80be55d1c9' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/constants.php',
+        '4a2a022c64ba7639d18c8d4f5c5cdde7' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/procedural.php',
+        'dd19387ac4a729c3a0925c13f277bec8' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/arrays.php',
+        'c91d7509f43537d85e7c955a95da52aa' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/comparisons.php',
+        '94da70552cd03a71dde1bb2060051435' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/general.php',
+        '3b7592d9c2e15a6153451dd14fb7eeef' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/strings.php',
+        '250a00ec246c248bd5539882144362f9' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/numbers.php',
+        '490845cdab16754217b118858b6ea3ff' => __DIR__ . '/..' . '/pinkcrab/function-constructors/src/objects.php',
         'be8785f285476d960a9374d1a827f21a' => __DIR__ . '/..' . '/pinkcrab/hook-loader/tests/Fixtures/functions.php',
     );
 
@@ -18,11 +27,10 @@ class ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4
             'PinkCrab\\Registerables\\' => 23,
             'PinkCrab\\Perique\\' => 17,
             'PinkCrab\\Loader\\' => 16,
-            'PinkCrab\\Form_Fields\\' => 21,
+            'PinkCrab\\FunctionConstructors\\' => 30,
         ),
         'G' => 
         array (
-            'Gin0115\\WPUnit_Helpers\\' => 23,
             'Gin0115\\Perique_Registerables_Example\\' => 38,
         ),
         'D' => 
@@ -52,13 +60,9 @@ class ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4
         array (
             0 => __DIR__ . '/..' . '/pinkcrab/hook-loader/src',
         ),
-        'PinkCrab\\Form_Fields\\' => 
+        'PinkCrab\\FunctionConstructors\\' => 
         array (
-            0 => __DIR__ . '/..' . '/pinkcrab/form_fields/src',
-        ),
-        'Gin0115\\WPUnit_Helpers\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/pinkcrab/registerables/WPUnit_Helpers',
+            0 => __DIR__ . '/..' . '/pinkcrab/function-constructors/src',
         ),
         'Gin0115\\Perique_Registerables_Example\\' => 
         array (
@@ -66,7 +70,7 @@ class ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4
         ),
         'Dice\\' => 
         array (
-            0 => __DIR__ . '/..' . '/level-2/dice',
+            0 => __DIR__ . '/..' . '/gin0115/dice',
         ),
     );
 
@@ -77,9 +81,9 @@ class ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1bc411f921f6619f4a4eedccd3d6a0c4::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitfbb0d6307eef497089179c14b90bda26::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitfbb0d6307eef497089179c14b90bda26::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitfbb0d6307eef497089179c14b90bda26::$classMap;
 
         }, null, ClassLoader::class);
     }

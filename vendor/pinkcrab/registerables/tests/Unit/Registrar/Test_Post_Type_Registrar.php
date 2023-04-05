@@ -22,7 +22,7 @@ use PinkCrab\Registerables\Tests\Fixtures\CPT\Basic_CPT;
 use PinkCrab\Registerables\Registrar\Meta_Data_Registrar;
 use PinkCrab\Registerables\Registrar\Post_Type_Registrar;
 use PinkCrab\Registerables\Validator\Post_Type_Validator;
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
+use PinkCrab\Registerables\Module\Middleware\Registerable;
 
 class Test_Post_Type_Registrar extends TestCase {
 
@@ -54,9 +54,9 @@ class Test_Post_Type_Registrar extends TestCase {
 
 		$post_type = new class() extends Post_Type {
 			// Name is capped between 1 and 20
-			public $key      = '0123456789012345678901234567890123456789';
-			public $singular = '0123456789012345678901234567890123456789';
-			public $plural   = '0123456789012345678901234567890123456789';
+			public string $key      = '0123456789012345678901234567890123456789';
+			public string $singular = '0123456789012345678901234567890123456789';
+			public string $plural   = '0123456789012345678901234567890123456789';
 		};
 
 		$this->expectException( \Exception::class );
@@ -101,7 +101,7 @@ class Test_Post_Type_Registrar extends TestCase {
 			'can_export'            => true,
 			'rewrite'               => false,
 			'capability_type'       => 'post',
-			'capabilities'          => array(),
+			'capabilities'          => array( 'edit_published_posts' => 'edit_basic' ),
 			'taxonomies'            => array(),
 			'show_in_rest'          => true,
 			'rest_base'             => 'basic_cpt',
@@ -109,6 +109,7 @@ class Test_Post_Type_Registrar extends TestCase {
 			'delete_with_user'      => null,
 			'template'              => array(),
 			'template_lock'         => false,
+			'map_meta_cap'          => true,
 		);
 
 		foreach ( $expected as $key => $value ) {

@@ -25,16 +25,28 @@ declare(strict_types=1);
 namespace PinkCrab\Perique\Services\View;
 
 use Exception;
+use PinkCrab\Perique\Utils\Object_Helper;
 use PinkCrab\Perique\Interfaces\Renderable;
+use PinkCrab\Perique\Services\View\View_Model;
+use PinkCrab\Perique\Services\View\Component\Component;
+use function PinkCrab\FunctionConstructors\Strings\endsWith;
+use PinkCrab\Perique\Services\View\Component\Component_Compiler;
 
-class PHP_Engine implements Renderable {
+final class PHP_Engine implements Renderable {
 
 	/**
 	 * The path to base of templates.
 	 *
 	 * @var string
 	 */
-	protected $base_view_path;
+	private string $base_view_path;
+
+	/**
+	 * Access to the component compiler.
+	 *
+	 * @var Component_Compiler
+	 */
+	private ?Component_Compiler $component_compiler = null;
 
 	/**
 	 * Creates an instance of the PHP_Engine
@@ -46,18 +58,65 @@ class PHP_Engine implements Renderable {
 	}
 
 	/**
+	 * Sets the component compiler.
+	 *
+	 * @param Component_Compiler $compiler
+	 * @return void
+	 */
+	public function set_component_compiler( Component_Compiler $compiler ): void {
+		$this->component_compiler = $compiler;
+	}
+
+	/**
 	 * Renders a template with data.
 	 *
 	 * @param string $view
 	 * @param iterable<string, mixed> $data
+	 * @param bool $print
 	 * @return string|void
 	 */
 	public function render( string $view, iterable $data, bool $print = true ) {
+		$view = $this->resolve_file_path( $view );
 		if ( $print ) {
 			print( $this->render_buffer( $view, $data ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		} else {
 			return $this->render_buffer( $view, $data );
 		}
+	}
+
+	/**
+	 * Renders a component.
+	 *
+	 * @param Component $component
+	 * @return string|void
+	 */
+	public function component( Component $component, bool $print = true ) {
+
+		// Throw exception of no compiler passed.
+		if ( ! Object_Helper::is_a( $this->component_compiler, Component_Compiler::class ) ) {
+			throw new Exception( 'No component compiler passed to PHP_Engine' );
+		}
+
+		// Compile the component.
+		$compiled = $this->component_compiler->compile( $component ); // @phpstan-ignore-line, checked above.
+		$template = $this->maybe_resolve_dot_notation( $compiled->template() );
+		$view     = sprintf( '%s%s%s.php', $this->base_view_path, \DIRECTORY_SEPARATOR, trim( $template ) );
+		if ( $print ) {
+			print( $this->render_buffer( $view, $compiled->data() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		} else {
+			return $this->render_buffer( $view, $compiled->data() );
+		}
+	}
+
+
+	/**
+	 * Renders a view Model
+	 *
+	 * @param View_Model $view_model
+	 * @return string|void
+	 */
+	public function view_model( View_Model $view_model, bool $print = true ) {
+		return $this->render( $view_model->template(), $view_model->data(), $print );
 	}
 
 	/**
@@ -80,13 +139,13 @@ class PHP_Engine implements Renderable {
 	 * Builds the view.
 	 *
 	 * @param string $view
-	 * @param iterable<string, mixed> $data
+	 * @param iterable<string, mixed> $__data
 	 * @return string
 	 * @throws Exception
 	 */
-	protected function render_buffer( string $view, iterable $data ): string {
+	private function render_buffer( string $view, iterable $__data ): string {
 
-		if ( ! file_exists( $this->resolve_file_path( $view ) ) ) {
+		if ( ! file_exists( $view ) ) {
 			throw new Exception( "{$view} doesn't exist" );
 		}
 
@@ -94,46 +153,55 @@ class PHP_Engine implements Renderable {
 		ob_start();
 
 		// Set all the data values a parameters.
-		foreach ( $data as $key => $value ) {
-			if ( is_string( $key ) ) {
-				${\wp_strip_all_tags( $key )} = $value;
+		foreach ( $__data as $__key => $__value ) {
+			if ( is_string( $__key ) ) {
+				${\wp_strip_all_tags( $__key )} = $__value;
 			}
+
+			// Unset the key and value.
+			unset( $__key, $__value );
 		}
 
-		include $this->resolve_file_path( $view );
+		// Unset the data.
+		unset( $__data );
+
+		include $view;
 		$output = ob_get_contents();
 		ob_end_clean();
 		return $output ?: '';
 	}
 
 	/**
-	 * Trims any leading slash and removes .php
-	 *
-	 * @param string $file
-	 * @return string
-	 */
-	protected function clean_filename( string $file ): string {
-			$file = ltrim( $file, '/' );
-			return substr( $file, -4 ) === '.php'
-			? substr( $file, 0, -4 )
-			: $file;
-
-	}
-
-	/**
-	 * Resolves the filepath from a filenane.
+	 * Resolves the filepath from a filename.
 	 *
 	 * @param string $filename
 	 * @return string
 	 */
-	protected function resolve_file_path( string $filename ): string {
+	private function resolve_file_path( string $filename ): string {
+		$filename = $this->maybe_resolve_dot_notation( $filename );
 		return sprintf(
 			'%s%s.php',
 			$this->base_view_path,
-			$this->clean_filename( $filename )
+			trim( $filename )
 		);
 	}
 
+	/**
+	 * Replaces dots with directory separator based on OS from $filename
+	 *
+	 * @param string $filename
+	 * @return string
+	 */
+	private function maybe_resolve_dot_notation( string $filename ): string {
+		if ( endsWith( '.php' )( $filename ) ) {
+			$filename = substr( $filename, 0, -4 );
+		}
+
+		$parts    = explode( '.', $filename );
+		$filename = implode( DIRECTORY_SEPARATOR, $parts );
+
+		return $filename;
+	}
 
 	/**
 	 * Verifies the view path exists and it has the trailing slash.
@@ -142,8 +210,8 @@ class PHP_Engine implements Renderable {
 	 * @return string
 	 * @throws Exception
 	 */
-	protected function verify_view_path( string $path ): string {
-
+	private function verify_view_path( string $path ): string {
+		$path = $this->maybe_resolve_dot_notation( $path );
 		$path = rtrim( $path, '/' ) . '/';
 
 		if ( ! \is_dir( $path ) ) {
@@ -151,5 +219,15 @@ class PHP_Engine implements Renderable {
 		}
 
 		return $path;
+	}
+
+	/**
+	 * Returns the base view path.
+	 *
+	 * @return string
+	 * @since 1.4.0
+	 */
+	public function base_view_path(): string {
+		return $this->base_view_path;
 	}
 }

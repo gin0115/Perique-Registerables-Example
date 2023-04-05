@@ -3,38 +3,26 @@
 /**
  * The Details meta box view for the Car post type.
  *
- * @var \Gin0115\Perique_Registerables_Example\Car\Car_Translations $car_translations.
+ * @var \Gin0115\Perique_Registerables_Example\Translations $translations.
  * @var \PinkCrab\Perique\Application\App_Config                    $app_config.
  * @var string                                                      $nonce.
  * @var \WP_Post                                                    $post.
  */
-
-use PinkCrab\Form_Fields\Label_Config;
-use PinkCrab\Form_Fields\Fields\Input_Color;
-use PinkCrab\Form_Fields\Fields\Input_Hidden;
-use PinkCrab\Form_Fields\Fields\Input_Number;
-dump(get_defined_vars());
+// dump( get_defined_vars() );
 ?>
-<div class="meta-field number">
-	<?php Input_Hidden::create( 'car_nonce' )->current( $nonce )->render(); ?> 
-	<?php
-	Input_Number::create( $app_config->post_meta( 'year' ) )
-		->label( $car_translations->year_label() )
-		->label_position( Label_Config::BEFORE_INPUT | Label_Config::LINKED_LABEL )
-		->current( get_post_meta( $post->ID, $app_config->post_meta( 'year' ), true ) )
-		->min( 1850 )
-		->max( 2020 )
-		->step( 1 )
-		->render();
-	?>
-</div>
+<div id="car-meta-box" class="wraps">
 
-<div class="meta-field color">
-	<?php
-	Input_Number::create( $app_config->post_meta( 'doors' ) )
-		->label( $car_translations->door_label() )
-		->label_position( Label_Config::BEFORE_INPUT | Label_Config::LINKED_LABEL )
-		->current( get_post_meta( $post->ID, $app_config->post_meta( 'doors' ), true ) )
-		->render();
-	?>
+	<input type="hidden" name="car_nonce" id="car_nonce" value="<?php echo esc_attr( $nonce ); ?>">
+	
+	<div id="meta-year" class="meta-row">
+		<label for="car_year"><?php echo $translations->meta_year_label(); ?></label>
+		<input type="number" name="<?php echo esc_attr( $app_config->meta( 'year' ) ); ?>" id="car_year" value="<?php echo esc_attr( $year ); ?>">
+		<p class="small"><?php echo $translations->meta_year_description(); ?></p>
+	</div>
+
+	<div id="meta-doors" class="meta-row">
+		<label for="car_door"><?php echo $translations->meta_door_label(); ?></label>
+		<input type="number" name="<?php echo esc_attr( $app_config->meta( 'doors' ) ); ?>" id="car_door" value="<?php echo esc_attr( $doors ); ?>">
+		<p class="small"><?php echo $translations->meta_door_description(); ?></p>
+	</div>
 </div>

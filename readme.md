@@ -1,127 +1,53 @@
-# Gin0115 Example Plugin
+# Gin0115 Example Registerables Plugin
 
-This is an example plugin to showcase the Perique Migrations service.
+A simple plugin that shows how you can create a custom post, with custom fields, and a custom taxonomy. Above is acheived using the [Registerables](https://github.com/Pink-Crab/Perique-Registerables) module for the [Perique Plugin Framework](https://github.com/Pink-Crab/Perique-Framework).
 
-## Activating this plugin will create a custom table defined in the `src/Migration/Gin0115_Migration` class
+# Explanation
 
-![Table Structure](docs/created_table.png)
-![Seeded Table Rows](docs/seeded_value.png)
+## plugin.php
 
-## Once it has been deactivated, the table and its seeded data will be dropped.
-
-## Migration Model
-
-The model used to define the tables schema, actions carried out on certain [Plugin Lifecycle Events](https://github.com/Pink-Crab/Perique_Plugin_Life_Cycle) and seed with initial data.
-
-> As with Perique in general, these models are constructed via [`Periques DI Container`](https://perique.info/core/DI/). This allow injected services and access to the [`App_Config`](https://perique.info/core/App/app_config)
-
+The main entry point for the plugin. This is where we create an instance of Perique and add the Registerables module. 
 ```php
-class Gin0115_Migration extends PinkCrab\Perique\Migration\Migration {
-
-    /** @var PinkCrab\Perique\Application\App_Config */
-    protected $app_config;
-
-    /** @var Gin0115\Perique_Migrations_Example\Service\Some_Service */
-    protected $some_service;
-
-    public function __construct( 
-        PinkCrab\Perique\Application\App_Config $app_config, 
-        Gin0115\Perique_Migrations_Example\Service\Some_Service $some_service 
-    ) {
-        $this->app_config   = $app_config;
-        $this->some_service = $some_service;
-
-        // The parents constructor should always be called after setting any dependencies.
-        parent::__construct();
-    }
-
-    /**
-     * Sets the table name, from App Config
-     *
-     * @return string
-     */
-    protected function table_name(): string {
-        return $this->app_config->db_tables( 'gin0115' );
-    }
-
-    /**
-     * Defines the schema for the migration.
-     *
-     * @param Schema $schema_config
-     * @return void
-     */
-    public function schema( PinkCrab\Table_Builder\Schema $schema_config ): void {
-        $schema_config->column( 'id' )
-            ->unsigned_int( 11 )
-            ->auto_increment();
-
-        $schema_config->column( 'foo' )
-            ->text( 24 );
-
-        $schema_config->column( 'bar' )
-            ->text( 24 );
-
-        $schema_config->index( 'id' )
-            ->primary();
-    }
-
-    /**
-     * Seed table using data from some injected service.
-     *
-     * @param array<string,mixed>[] $seeds
-     * @return array<string,mixed>[]
-     */
-    public function seed( array $seeds ): array {
-        return $this->some_service->generate_migration_seeds();
-    }
-
-    /**
-     * This table should NOT be dropped when its deactivated
-     *
-     * @return bool
-     */
-    public function drop_on_deactivation(): bool {
-        return false;
-    }
-
-    /**
-     * This table should be dropped when its uninstalled
-     *
-     * @return bool
-     */
-    public function drop_on_uninstall(): bool {
-        return true;
-    }
-}
-```
-
-This is passed to the Migration services as its class name (this allows for construction via the DI, with out dependencies injected.)
-
-```php
-// Boot a barebones version of perique
-$app = ( new PinkCrab\Perique\Application\App_Factory() )
-	->with_wp_dice()
+( new App_Factory( __DIR__ ) )
+	->default_setup()
 	->app_config(
-		// Usually you do with as its own file with more settings!
 		array(
-			'db_tables' => array(
-				'gin0115' => 'gin0115_table',
+			'post_types' => array(
+				'car' => 'example_car',
+			),
+			'taxonomies' => array(
+				'brand' => 'example_brand',
+			),
+			'meta'       => array(
+				App_Config::POST_META => array(
+					'year'  => 'example_car_year',
+					'doors' => 'example_car_doors',
+				),
 			),
 		)
 	)
-	->boot();
-
-// Setup Plugin Life Cycle and Migration services.
-$plugin_state_controller = new PinkCrab\Plugin_Lifecycle\Plugin_State_Controller( $app );
-$migrations              = new PinkCrab\Perique\Migration\Migrations( $plugin_state_controller, 'perique_migrations_example_a' );
-
-// Add our migration
-$migrations->add_migration( 'Gin0115\Perique_Migrations_Example\Migration\Gin0115_Migration' );
-
-// Finalise.
-$migrations->done();
-$plugin_state_controller->finalise( __FILE__ );
+	->module( Registerable::class )
+	->registration_classes(
+		array(
+			Car_Post_Type::class,
+			Car_Brand_Taxonomy::class,
+		)
+	)
+    ->boot();
 ```
 
-## More Details
-Please see the [Perique Migrations]() repo for more details documentation.
+### [Default Setup](https://perique.info/core/App/setup#using-the-factory)
+
+Here we use the [App_Factory](https://perique.info/core/App/app_factory) to create the basis of our Perique app. We pass `__DIR__` to the factory, so that it can find the plugin root to use as the basis for paths.
+
+We then call the `default_setup()` method, which will setup the plugin to use the default internal dependencies and initial configuration for the following.
+
+* Setup the [View](https://perique.info/core/App/view) service using the PHP render engine.
+* Setup PinkCrab_Dice as the [DI Container](https://perique.info/core/DI).
+* Register [App_Config](https://perique.info/core/App/app_config) using the defined paths (base and view)
+* Initialise the [Hook_Loader](https://perique.info/lib/Hook_Loader) used by the [Registration](https://perique.info/core/Registration/) and [Module](https://perique.info/core/Registration/Modules) services.
+* Initialise the [Module](https://perique.info/core/Registration/Modules) service used to load the modules, adds the built in [Hookable](https://perique.info/core/Registration/Hookable) module.
+
+> It is advisable to use the default setup, as it will ensure that the plugin is setup correctly, and will allow you to use the built in modules and services.
+
+

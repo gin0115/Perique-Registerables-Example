@@ -13,10 +13,10 @@
         "email": "glynn.quelch@gmail.com"
     }],
     "require": {
-        "pinkcrab/perique-framework-core": "^1.0",
-        "pinkcrab/registerables": "dev-master",
-        "pinkcrab/wp-rest-schema": "dev-master",
-        "pinkcrab/form_fields": "dev-master"
+        "pinkcrab/perique-framework-core": "2.0.*",
+        "pinkcrab/registerables": "2.0.*",
+        "pinkcrab/wp-rest-schema": "^0.0"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

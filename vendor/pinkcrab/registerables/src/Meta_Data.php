@@ -24,22 +24,20 @@ declare(strict_types=1);
 
 namespace PinkCrab\Registerables;
 
-use PinkCrab\Registerables\Registration_Middleware\Registerable;
-
 class Meta_Data {
 	/**
 	 * Object type meta applies to
 	 *
 	 * @var string
 	 */
-	protected $meta_type = 'post';
+	protected string $meta_type = 'post';
 
 	/**
 	 * Holds a secondary object type, used for post type and taxonomy.
 	 *
 	 * @var string|null
 	 */
-	protected $object_subtype = null;
+	protected ?string $object_subtype = null;
 
 	/**
 	 * Value type.
@@ -47,21 +45,21 @@ class Meta_Data {
 	 *
 	 * @var string
 	 */
-	protected $type = 'string';
+	protected string $type = 'string';
 
 	/**
 	 * Meta description
 	 *
 	 * @var string
 	 */
-	protected $description = '';
+	protected string $description = '';
 
 	/**
 	 * Meta value is single value or array
 	 *
 	 * @var bool
 	 */
-	protected $single = false;
+	protected bool $single = false;
 
 	/**
 	 * Default value
@@ -72,20 +70,20 @@ class Meta_Data {
 	protected $default = '';
 
 	/**
-	 * The meta fields callbacks
-	 *
-	 * @var array{
-	 *  sanitize: null|callable,
-	 *  permissions: null|callable,
-	 *  rest_get: null|callable,
-	 *  rest_set: null|callable
-	 * }
-	 */
-	protected $callbacks = array(
+	* The meta fields callbacks
+	*
+	* @var array{
+	*  sanitize: null|callable,
+	*  permissions: null|callable,
+	*  rest_view: null|callable(mixed[]): void,
+	*  rest_update: null|callable(mixed,\WP_Post|\WP_Term|\WP_User|\WP_Comment): void
+	* }
+	*/
+	protected array $callbacks = array(
 		'sanitize'    => null,
 		'permissions' => null,
-		'rest_get'    => null,
-		'rest_set'    => null,
+		'rest_view'   => null,
+		'rest_update' => null,
 	);
 
 	/**
@@ -100,7 +98,7 @@ class Meta_Data {
 	 *
 	 * @var string
 	 */
-	protected $meta_key;
+	protected string $meta_key;
 
 	public function __construct( string $meta_key ) {
 		$this->meta_key = $meta_key;
@@ -233,6 +231,28 @@ class Meta_Data {
 	}
 
 	/**
+	* Sets the GET callback for REST requests.
+	*
+	* @param callable|null $callback
+	* @return self
+	*/
+	public function rest_view( ?callable $callback ): self {
+		$this->callbacks['rest_view'] = $callback;
+		return $this;
+	}
+
+	/**
+	 * Sets the UPDATE callback for REST requests.
+	 *
+	 * @param null|callable(mixed,\WP_Post|\WP_Term|\WP_User|\WP_Comment):void $callback
+	 * @return self
+	 */
+	public function rest_update( ?callable $callback ): self {
+		$this->callbacks['rest_update'] = $callback;
+		return $this;
+	}
+
+	/**
 	 * Builds the args array for registering metadata
 	 *
 	 * @return array<string, mixed>
@@ -283,59 +303,6 @@ class Meta_Data {
 	}
 
 	/**
-	 * Sets the GET callback for REST requests.
-	 *
-	 * @param callable|null $callback
-	 * @return self
-	 */
-	public function rest_get( ?callable $callback ): self {
-		$this->callbacks['rest_get'] = $callback;
-		return $this;
-	}
-
-	/**
-	 * Sets the SET/UPDATE callback for REST requests.
-	 *
-	 * @param callable|null $callback
-	 * @return self
-	 */
-	public function rest_set( callable $callback ): self {
-		$this->callbacks['rest_set'] = $callback;
-		return $this;
-	}
-
-	/**
-	 * Gets the GET callback for REST requests.
-	 *
-	 * @param callable|null $callback
-	 * @return self
-	 */
-	public function get_rest_get(): ?callable {
-		return $this->callbacks['rest_get'];
-	}
-
-	/**
-	 * Sets the GET callback for REST requests.
-	 *
-	 * @param callable|null $callback
-	 * @return self
-	 */
-	public function get_rest_set(): ?callable {
-		return $this->callbacks['rest_set'];
-	}
-
-
-
-	/**
-	 * Get object type meta applies to
-	 *
-	 * @return string
-	 */
-	public function get_type(): string {
-		return $this->meta_type;
-	}
-
-	/**
 	 * Get holds a secondary object type, used for post type and taxonomy.
 	 *
 	 * @return string|null
@@ -343,4 +310,32 @@ class Meta_Data {
 	public function get_subtype(): ?string {
 		return $this->object_subtype;
 	}
+
+	/**
+	* Gets the GET callback for REST requests.
+	*
+	* @return null|callable(mixed[]): void
+	*/
+	public function get_rest_view(): ?callable {
+		return $this->callbacks['rest_view'];
+	}
+
+	/**
+	 * Sets the GET callback for REST requests.
+	 *
+	 * @return null|callable(mixed,\WP_Post|\WP_Term|\WP_User|\WP_Comment): void
+	 */
+	public function get_rest_update(): ?callable {
+		return $this->callbacks['rest_update'];
+	}
+
+	/**
+	 * Returns the value type.
+	 *
+	 * @return string
+	 */
+	public function get_value_type(): string {
+		return $this->type;
+	}
+
 }
