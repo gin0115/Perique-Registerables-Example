@@ -14,9 +14,15 @@ use PinkCrab\Registerables\{Meta_Box,Meta_Data,Post_Type};
 
 class Car_Post_Type extends Post_Type {
 
-	private Car_Details_Meta $car_details_meta;
+	// Post type details.
 	public string $dashicon = 'dashicons-car';
+	public ?bool $gutenberg = true;
+	public array $supports  = array( 'editor', 'title', 'thumbnail' );
 
+	// The Meta Service.
+	private Car_Details_Meta $car_details_meta;
+
+	// Make use of injected services to build the post type.
 	public function __construct(
 		App_Config $app_config,
 		Translations $translations,
@@ -24,8 +30,6 @@ class Car_Post_Type extends Post_Type {
 	) {
 		// Hold Meta Box Service as a prop for used in callbacks.
 		$this->car_details_meta = $car_details_meta;
-
-		// Set labels and key from injected services.
 
 		// Key and taxonomies used from App_Config
 		$this->key        = $app_config->post_types( 'car' );
@@ -36,12 +40,8 @@ class Car_Post_Type extends Post_Type {
 		$this->plural      = $translations->cpt_plural();
 		$this->description = $translations->cpt_description();
 
-		// Define which features are enabled.
-		$this->supports = array( 'editor', 'title', 'thumbnail' );
-
-		// Enable Gutenberg and define a basic template.
-		$this->gutenberg = true;
-		$this->template  = array(
+		// Define the template for the post type.
+		$this->template = array(
 			array(
 				'core/heading',
 				array(

@@ -87,3 +87,25 @@ Once the module is added the `Registerable_Middleware` is added, this allows us 
 In the above example we pass the definitions for the `Cars` post type and the `Brand` taxonomy. These are defined in the following classes.
 
 ```php
+use Gin0115\Perique_Registerables_Example\Car\Car_Post_Type;
+use Gin0115\Perique_Registerables_Example\Car\Car_Brand_Taxonomy;
+
+->registration_classes(
+   array(
+      Car_Post_Type::class,
+      Car_Brand_Taxonomy::class,
+   )
+)
+```
+
+## Car_Post_Type.php
+
+This class defines the `Car` post type. It extends the [Post_Type](https://perique.info/module/Registerables/#post-type) class, which allows us to define a post type, while allowing us to inject various services and dependencies.
+
+### Injected Services
+
+* [App_Config](https://perique.info/core/App/app_config) - Used to get the post type slug.
+* [Translations](#translations) - Used to translate the labels.
+* [Car_Details_Meta](#car_details_meta) - Service that provides the meta data defitnions and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
+
+```php
