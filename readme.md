@@ -108,6 +108,14 @@ This class defines the `Car` post type. It extends the [Post_Type](https://periq
 * @TODO [Translations](#) - Used to translate the labels.
 * @TODO [Car_Details_Meta](#) - Service that provides the meta data definiens and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
 
+```php
+public function __construct(
+   App_Config $app_config,
+   Translations $translations,
+   Car_Details_Meta $car_details_meta
+) {..}
+```
+
 ### [Post_Type](https://perique.info/module/Registerables/#post-type)
 
 As per the defineable fields of the [Post_Type](https://perique.info/module/Registerables/docs/Post-Type) class, we can define the following.
