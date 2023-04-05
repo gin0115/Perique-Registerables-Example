@@ -4,7 +4,7 @@ A simple plugin that shows how you can create a custom post, with custom fields,
 
 ![Car Post Type List](docs/images/Cars-Post-Type-List.png "Image of the Car Post Type list table")
 
-![Cars Post Type Editor](images/Cars-Post-Type-Editor-full.png "Image of the Car Post Type Editor (FULL SCREEN), with the defined block template.")
+![Cars Post Type Editor](docs/images/Cars-Post-Type-Editor-full.png "Image of the Car Post Type Editor (FULL SCREEN), with the defined block template.")
 
 ![Car Brand Taxonomy List](docs/images/Cars-Taxonomy-List.png "Image of the Car Brand Taxonomy list table and quick add")
 
