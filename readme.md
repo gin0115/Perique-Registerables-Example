@@ -82,6 +82,8 @@ This allows us to call `$app_config->post_meta('year')` and get back the slug `e
 
 We add the [Registerable](https://perique.info/core/Registration/Modules/Registerable) module using the `module()` method. There is no optional config for this module, so we can just pass the class name.
 
-Once the module is added the `Registerable_Middleware` is added, this allows us to register our classes [Post Type](https://perique.info/core/Registration/Post_Type), [Taxonomy](https://perique.info/core/Registration/Taxonomy) and [Meta Data](https://perique.info/core/Registration/Meta_Data) using the `registration_classes()` method.
+Once the module is added the `Registerable_Middleware` is added, this allows us to register our defintions for [Post Types](https://perique.info/module/Registerables/#post-type), [Taxonomies](https://perique.info/module/Registerables/#taxonomy), [Meta Data](https://perique.info/module/Registerables/#metadata) and [Meta Boxes](https://perique.info/module/Registerables/#meta-box).
+
+In the above example we pass the definitions for the `Cars` post type and the `Brand` taxonomy. These are defined in the following classes.
 
 ```php
