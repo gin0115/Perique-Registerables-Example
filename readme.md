@@ -36,7 +36,7 @@ The main entry point for the plugin. This is where we create an instance of Peri
    ->boot();
 ```
 
-### [Default Setup](https://perique.info/core/App/setup#using-the-factory)
+### [Default App_Factory Setup](https://perique.info/core/App/setup#using-the-factory)
 
 Here we use the [App_Factory](https://perique.info/core/App/app_factory) to create the basis of our Perique app. We pass `__DIR__` to the factory, so that it can find the plugin root to use as the basis for paths.
 
@@ -50,4 +50,30 @@ We then call the `default_setup()` method, which will setup the plugin to use th
 
 > It is advisable to use the default setup, as it will ensure that the plugin is setup correctly, and will allow you to use the built in modules and services.
 
+### [App_Config](https://perique.info/core/App/app_config)
 
+Here we pass a few custom values to the App_Config service. This allows us to define the keys/slugs used by the Post_Type, Taxonomy and Meta Data.
+
+```php
+'post_types' => array(
+   'car' => 'example_car',
+),
+```
+This allows us to call `$app_config->post_types('car')` and get back the slug `example_car`. 
+
+```php
+'taxonomies' => array(
+   'brand' => 'example_brand',
+),
+```
+This allows us to call `$app_config->taxonomies('brand')` and get back the slug `example_brand`. 
+
+```php
+'meta'       => array(
+   App_Config::POST_META => array(
+      'year'  => 'example_car_year',
+      'doors' => 'example_car_doors',
+   ),
+),
+```
+This allows us to call `$app_config->post_meta('year')` and get back the slug `example_car_year`.
