@@ -18,6 +18,8 @@ A simple plugin that shows how you can create a custom post, with custom fields,
 
 # Installation
 
+![Example Plugin Active](docs/images/Example-Plugin-Active.png "Example Plugin Active")
+
 * Clone the repo
 * Run `composer install --no-dev --optimize-autoloader`
 * Activate the plugin
