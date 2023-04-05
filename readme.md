@@ -108,8 +108,8 @@ This class defines the `Car` post type. It extends the [Post_Type](https://periq
 ### [Injected Services](https://perique.info/core/DI/)
 
 * [App_Config](https://perique.info/core/App/app_config) - Used to get the post type slug.
-* @TODO [Translations](#) - Used to translate the labels.
-* @TODO [Car_Details_Meta](#) - Service that provides the meta data definiens and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
+* [Translations](#translationsphp) - Used to translate the labels.
+* [Car_Details_Meta](#car_details_metaphp) - Service that provides the meta data definiens and the accompanying [Meta Box](https://perique.info/module/Registerables/#meta-box) for the post type.
 
 ```php
 public function __construct(
@@ -168,7 +168,7 @@ As with the `Car_Post_Type`, this taxonomy extends from the similar [Taxonomy](h
 ### [Injected Services](https://perique.info/core/DI/)
 
 * [App_Config](https://perique.info/core/App/app_config) - Used to get the taxonomy slug.
-* [Translations](#) - Used to translate the labels.
+* [Translations](#translationsphp) - Used to translate the labels.
 
 ```php
 public function __construct(
