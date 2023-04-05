@@ -6,6 +6,9 @@ A simple plugin that shows how you can create a custom post, with custom fields,
 
 * [Plugin File](#pluginphp)
 * [Car_Post_Type.php](#car_post_typephp)
+* [Car_Brand_Taxonomy.php](#car_brand_taxonomyphp)
+* [Car_Details_Meta.php](#car_details_metaphp)
+* [Translations.php](#translationsphp)
 
 ## plugin.php
 
