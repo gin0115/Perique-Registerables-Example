@@ -77,7 +77,7 @@ class Car_Details_Meta {
 		// Loop through all expected meta keys and update meta data.
 		$meta_keys = array_map(
 			fn( Meta_Data $meta): string => $meta->get_meta_key(),
-			$this->get_meta_data()
+			$this->get_meta_fields()
 		);
 
 		// Get all the current data from global post and set against post meta.
@@ -101,15 +101,13 @@ class Car_Details_Meta {
 			->description( $this->translations->meta_year_description() )
 			->default( 2000 )
 			->rest_schema(
-				Argument_Parser::for_meta_data(
-					Integer_Type::on( $this->app_config->post_meta( 'year' ) )
-						->minimum( 1850 )
-						->maximum( (int) gmdate( 'Y' ) )
-						->description( $this->translations->meta_year_description() )
-						->required()
-						->context( 'view', 'edit' )
-						->sanitization( 'absint' )
-				)
+				Integer_Type::on( $this->app_config->post_meta( 'year' ) )
+					->minimum( 1850 )
+					->maximum( (int) gmdate( 'Y' ) )
+					->description( $this->translations->meta_year_description() )
+					->required()
+					->context( 'view', 'edit' )
+					->sanitization( 'absint' )
 			);
 
 		// Add the meta data definition for the doors.
@@ -119,12 +117,13 @@ class Car_Details_Meta {
 			->description( $this->translations->meta_door_description() )
 			->default( 5 )
 			->rest_schema(
-				Argument_Parser::for_meta_data(
-					Integer_Type::on( $this->app_config->post_meta( 'doors' ) )
-						->description( $this->translations->meta_door_description() )
-						->required()
-						->context( 'view' )
-						->sanitization( 'absint' )
+				array(
+					'$schema'           => 'http://json-schema.org/draft-04/schema#',
+					'description'       => $this->translations->meta_door_description(),
+					'type'              => 'integer',
+					'context'           => array( 'view' ),
+					'required'          => true,
+					'sanitize_callback' => 'absint',
 				)
 			);
 		return $meta_fields;
