@@ -58,7 +58,7 @@ $meta_fields[] = ( new Meta_Data( $this->app_config->post_meta( 'doors' ) ) )
          'context'           => array( 'view' ),
          'required'          => true,
          'sanitize_callback' => 'absint',
-		)
+      )
 );
 ```
 Defined with the key from [App_Config](https://perique.info/core/App/app_config) as a [single](https://perique.info/module/Registerables/docs/Meta_Data#singlebool-single-meta_data) [integer (type)](https://perique.info/module/Registerables/docs/Meta_Data#typetype-meta_data) with a description provided by the [Translation](#translationsphp) service. The `default` value is set to `5`, and the [REST Schema](https://perique.info/module/Registerables/docs/Meta-Data#rest_schema) is defined using the regular [WordPress schema definitions](https://developer.wordpress.org/rest-api/extending-the-rest-api/schema/).
