@@ -1,8 +1,8 @@
-## Car_Post_Type.php
+# Car_Post_Type.php
 
 This class defines the `Car` post type. It extends the [Post_Type](https://perique.info/module/Registerables/#post-type) class, which allows us to define a post type, while allowing us to inject various services and dependencies.
 
-### [Injected Services](https://perique.info/core/DI/)
+## [Injected Services](https://perique.info/core/DI/)
 
 * [App_Config](https://perique.info/core/App/app_config) - Used to get the post type slug.
 * [Translations](translations.md) - Used to translate the labels.
@@ -16,7 +16,7 @@ public function __construct(
 ) {..}
 ```
 
-### [Defining the Post_Type](https://perique.info/module/Registerables/#post-type)
+## [Defining the Post_Type](https://perique.info/module/Registerables/#post-type)
 
 ![Cars Post Type Editor](images/Cars-Post-Type-Editor.png "Image of the Car Post Type Editor, with the defined block template.")
 

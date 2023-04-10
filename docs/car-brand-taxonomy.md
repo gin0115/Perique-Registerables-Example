@@ -1,6 +1,8 @@
+# Car_Brand_Taxonomy.php
+
 As with the `Car_Post_Type`, this taxonomy extends from the similar [Taxonomy](https://perique.info/module/Registerables/#taxonomy) class. This allows us to define the taxonomy, while allowing us to inject various services and dependencies.
 
-### [Injected Services](https://perique.info/core/DI/)
+## [Injected Services](https://perique.info/core/DI/)
 
 * [App_Config](https://perique.info/core/App/app_config) - Used to get the taxonomy slug.
 * [Translations](translations.md) - Used to translate the labels.
@@ -12,7 +14,7 @@ public function __construct(
 ) {..}
 ```
 
-### [Defining the Taxonomy](https://perique.info/module/Registerables/#taxonomy)
+## [Defining the Taxonomy](https://perique.info/module/Registerables/#taxonomy)
 
 ![Car Brand Taxonomy List](images/Cars-Taxonomy-List.png "Image of the Car Brand Taxonomy list table and quick add")
 
